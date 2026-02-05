@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Book</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #eef2f5;
+  margin: 0;
+  padding: 30px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+table {
+  background-color: #ffffff;
+  border-collapse: collapse;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+}
+
+th {
+  text-align: left;
+  padding: 10px;
+  color: #333;
+  font-weight: normal;
+}
+
+input[type="text"],
+input[type="file"] {
+  width: 260px;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+img {
+  margin-top: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+button {
+  padding: 10px 25px;
+  background-color: #27ae60;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #219150;
+}
+  </style>
+</head>
+<body>
+
+<center>
+  <h2>Edit Book</h2>
+  <form action="/edit/<%= book._id %>" method="post" enctype="multipart/form-data">
+    <table>
+      <tr>
+        <th>Book Name</th>
+        <th><input type="text" name="bookname" value="<%= book.bookname %>"></th>
+      </tr>
+      <tr>
+        <th>Author Name</th>
+        <th><input type="text" name="authorname" value="<%= book.authorname %>"></th>
+      </tr>
+      <tr>
+        <th>Price</th>
+        <th><input type="text" name="price" value="<%= book.price %>"></th>
+      </tr>
+      <tr>
+        <th>Category</th>
+        <th><input type="text" name="category" value="<%= book.category %>"></th>
+      </tr>
+      <tr>
+        <th>Book Number</th>
+        <th><input type="text" name="bookid" value="<%= book.bookid %>"></th>
+      </tr>
+      <tr>
+        <th>Language</th>
+        <th><input type="text" name="language" value="<%= book.language %>"></th>
+      </tr>
+      <tr>
+        <th>Quantity</th>
+        <th><input type="text" name="quantity" value="<%= book.quantity %>"></th>
+      </tr>
+      <tr>
+        <th>Image</th>
+        <th>
+          <input type="file" name="img">
+          <br><br>
+          <img src="/uploads/<%= book.img %>" width="80">
+        </th>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <button type="submit">Update Book</button>
+        </th>
+      </tr>
+    </table>
+  </form>
+</center>
+
+</body>
+</html>
