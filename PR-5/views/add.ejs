@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Movie</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="form-container">
+    <h2>🎬 Add New Movie</h2>
+
+    <form action="/add-movie" method="post" enctype="multipart/form-data">
+
+        <input type="text" name="title" placeholder="Movie Name" required>
+
+        <input type="text" name="language" placeholder="Language" required>
+
+        <input type="text" name="category" placeholder="Category" required>
+
+        <input type="date" name="date" required>
+
+        <input type="time" name="time" required>
+
+        <input type="number" name="rate" placeholder="Rate /10" required>
+
+        <input type="file" name="image" required>
+
+        <button type="submit" class="main-btn">Add Movie</button>
+    </form>
+
+    <a href="/" class="back-btn">⬅ Back</a>
+</div>
+
+</body>
+</html>

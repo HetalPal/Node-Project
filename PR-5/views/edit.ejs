@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Movie</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="form-container">
+    <h2>✏ Edit Movie</h2>
+
+    <form action="/update-movie/<%= movie._id %>" method="post" enctype="multipart/form-data">
+
+        <input type="text" name="title" value="<%= movie.title %>" required>
+
+        <input type="text" name="language" value="<%= movie.language %>" required>
+
+        <input type="text" name="category" value="<%= movie.category %>" required>
+
+        <input type="date" name="date" value="<%= movie.date %>" required>
+
+        <input type="time" name="time" value="<%= movie.time %>" required>
+
+        <input type="number" name="rate" value="<%= movie.rate %>" required>
+
+        <p class="old-img-text">Current Poster</p>
+        <img src="/<%= movie.image %>" class="old-img">
+
+        <input type="file" name="image">
+
+        <button type="submit" class="main-btn">Update Movie</button>
+    </form>
+
+    <a href="/" class="back-btn">⬅ Back</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+    <h1>🎬 My Movie Booking</h1>
+    <a href="/add-movie" class="add-btn">+ Add Movie</a>
+</header>
+
+<div class="movie-container">
+
+<% movie.forEach(function(m){ %>
+
+    <div class="card">
+
+        <% if(m.image){ %>
+            <img src="/<%= m.image %>" class="poster">
+        <% } %>
+
+        <div class="card-body">
+            <h3><%= m.title %></h3>
+            <p><strong>Language:</strong> <%= m.language %></p>
+            <p><strong>Category:</strong> <%= m.category %></p>
+            <p><strong>Date:</strong> <%= m.date %></p>
+            <p><strong>Time:</strong> <%= m.time %></p>
+            <p class="rating">⭐ <%= m.rate %>/10</p>
+
+            <div class="btn-group">
+                <a href="/edit-movie/<%= m._id %>" class="edit-btn">Edit</a>
+                <a href="/delete-movie/<%= m._id %>" class="delete-btn">Delete</a>
+            </div>
+        </div>
+
+    </div>
+
+<% }) %>
+
+</div>
+
+</body>
+</html>
