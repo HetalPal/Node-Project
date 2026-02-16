@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const dbConnect = () =>{
-    mongoose.connect('mongodb://localhost:27017/PR-5')
+    mongoose.connect('mongodb+srv://htlpal01_db_user:hetal0102@cluster0.4wsx3kh.mongodb.net/PR-5')
     .then(() => console.log("Database Connected"))
     .catch((err) => console.log(err));
 };
