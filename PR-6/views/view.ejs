@@ -1,0 +1,78 @@
+<%- include('header') %>
+
+  <div class="page-wrapper">
+    <div class="container-fluid">
+      <h2 class="mb-4">All Blogs</h2>
+      <form method="GET" action="/blog/view-blog" class="mb-3">
+        <div class="row">
+          <div class="col-md-4">
+            <input type="text" name="search" class="form-control" placeholder="Search by title"
+              value="<%= search || '' %>">
+          </div>
+
+          <div class="col-md-3">
+            <select name="sort" class="form-control">
+              <option value="">Sort</option>
+              <option value="new" <%=sort==="new" ? "selected" : "" %>>Newest</option>
+              <option value="old" <%=sort==="old" ? "selected" : "" %>>Oldest</option>
+              <option value="az" <%=sort==="az" ? "selected" : "" %>>A-Z</option>
+            </select>
+          </div>
+
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="mb-4">
+        <a href="/blog/view-blog" class="btn btn-sm <%= !category ? 'btn-primary' : 'btn-secondary' %>">
+          All
+        </a>
+
+        <% categories.forEach(cat=> { %>
+          <a href="/blog/view-blog?category=<%= cat %>"
+            class="btn btn-sm <%= category === cat ? 'btn-primary' : 'btn-secondary' %>">
+            <%= cat %>
+          </a>
+
+          <% }) %>
+
+      </div>
+
+      <div class="row">
+        <% blogs.forEach(blog=> { %>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <% if(blog.image){ %>
+                <img src="<%= blog.image %>" class="card-img-top" height="200" style="object-fit:cover;">
+                <% } %>
+
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <%= blog.title %>
+                    </h5>
+
+                    <p>
+                      <strong>Author:</strong>
+                      <%= blog.author %><br>
+                        <strong>Category:</strong>
+                        <%= blog.category %>
+                    </p>
+
+                    <p>
+                      <%= blog.description.substring(0,100) %>...
+                    </p>
+
+                    <a href="/blog/single-blog/<%= blog._id %>" class="btn btn-primary btn-sm">
+                      Read More
+                    </a>
+                  </div>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <%- include('footer') %>
