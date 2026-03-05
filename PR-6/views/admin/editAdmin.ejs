@@ -1,0 +1,84 @@
+<%- include('../header') %>
+
+<div class="page-wrapper">
+  <div class="container-fluid">
+
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title mb-4">Edit Admin</h3>
+
+        <form action="/admin/update-admin/<%= admin._id %>" method="POST" enctype="multipart/form-data">
+
+          <!-- First Name -->
+          <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input type="text" name="firstname"
+              value="<%= admin.firstname %>"
+              class="form-control" required>
+          </div>
+
+          <!-- Last Name -->
+          <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input type="text" name="lastname"
+              value="<%= admin.lastname %>"
+              class="form-control" required>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email"
+              value="<%= admin.email %>"
+              class="form-control" required>
+          </div>
+
+          <!-- Mobile -->
+          <div class="mb-3">
+            <label class="form-label">Mobile No</label>
+            <input type="text" name="mobileNo"
+              value="<%= admin.mobileNo %>"
+              class="form-control" required>
+          </div>
+
+          <!-- Gender -->
+          <div class="mb-3">
+            <label class="form-label">Gender</label><br>
+
+            <input type="radio" name="gender" value="Male"
+              <%= admin.gender === "Male" ? "checked" : "" %> > Male
+
+            <input type="radio" name="gender" value="Female"
+              <%= admin.gender === "Female" ? "checked" : "" %> > Female
+          </div>
+
+          <!-- Profile Image -->
+          <div class="mb-3">
+            <label class="form-label">Profile Image</label>
+           <input type="file" name="profileImage" class="form-control">
+
+            <% if(admin.profileImage) { %>
+              <div class="mt-2">
+                <img src="<%= admin.profileImage %>" width="100">
+              </div>
+            <% } %>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary">
+            Update Admin
+          </button>
+
+          <a href="/admin/view-admin" class="btn btn-secondary">
+            Cancel
+          </a>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../footer') %>

@@ -1,126 +1,124 @@
 <%- include('header') %>
-      <!-- ============================================================== -->
-      <!-- Page wrapper  -->
-      <!-- ============================================================== -->
-      <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="page-breadcrumb">
-          <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Form Basic</h4>
-              <div class="ms-auto text-end">
-                <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                      Library
-                    </li>
-                  </ol>
-                </nav>
+
+<div class="page-wrapper">
+
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Form Basic</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Library
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+
+          <form class="form-horizontal" 
+                action="/blog/add-blog" 
+                method="POST" 
+                enctype="multipart/form-data">
+
+            <div class="card-body">
+              <h4 class="card-title">Add Blog Details</h4>
+
+              <!-- Title -->
+              <div class="form-group row">
+                <label class="col-sm-3 text-end control-label col-form-label">
+                  Title
+                </label>
+                <div class="col-sm-9">
+                  <input type="text"
+                         class="form-control"
+                         name="title"
+                         placeholder="Title Here"
+                         required />
+                </div>
+              </div>
+
+              <!-- Author -->
+              <div class="form-group row">
+                <label class="col-sm-3 text-end control-label col-form-label">
+                  Author Name
+                </label>
+                <div class="col-sm-9">
+                  <input type="text"
+                         class="form-control"
+                         name="author"
+                         placeholder="Author Name Here"
+                         required />
+                </div>
+              </div>
+
+              <!-- Category Dropdown -->
+              <div class="form-group row">
+                <label class="col-sm-3 text-end control-label col-form-label">
+                  Category
+                </label>
+                <div class="col-sm-9">
+                  <select name="category" class="form-control" required>
+                    <option value="">Select Category</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Business">Business</option>
+                    <option value="Trip">Trip</option>
+                    <option value="Health">Health</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group row">
+                <label class="col-sm-3 text-end control-label col-form-label">
+                  Description
+                </label>
+                <div class="col-sm-9">
+                  <textarea class="form-control"
+                            name="description"
+                            required></textarea>
+                </div>
+              </div>
+
+              <!-- Image -->
+              <div class="form-group row">
+                <label class="col-sm-3 text-end control-label col-form-label">
+                  Image
+                </label>
+                <div class="col-sm-9">
+                  <input type="file"
+                         class="form-control"
+                         name="image"
+                         required />
+                </div>
+              </div>
+
+            </div>
+
+            <div class="border-top">
+              <div class="card-body">
+                <button type="submit" class="btn btn-primary">
+                  Submit
+                </button>
               </div>
             </div>
-          </div>
+
+          </form>
+
         </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="container-fluid">
-          <!-- ============================================================== -->
-          <!-- Start Page Content -->
-          <!-- ============================================================== -->
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card">
-                <form class="form-horizontal" action="/blog/add-blog" method="POST" enctype="multipart/form-data">
-                  <div class="card-body">
-                    <h4 class="card-title">Add Blog Details</h4>
-                    <div class="form-group row">
-                      <label
-                        for="fname"
-                        class="col-sm-3 text-end control-label col-form-label"
-                        >Title</label
-                      >
-                      <div class="col-sm-9">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="fname"
-                          name="title"
-                          placeholder="Title Here"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label
-                        for="lname"
-                        class="col-sm-3 text-end control-label col-form-label"
-                        >Author Name</label
-                      >
-                      <div class="col-sm-9">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="lname"
-                          name="author"
-                          placeholder="Author Name Here"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label
-                        for="lname"
-                        class="col-sm-3 text-end control-label col-form-label"
-                        >Category</label
-                      >
-                      <div class="col-sm-9">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="lname"
-                          name="category"
-                          placeholder="Category Here"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label
-                        for="email1"
-                        class="col-sm-3 text-end control-label col-form-label"
-                        >Description</label
-                      >
-                      <div class="col-sm-9">
-                        <textarea class="form-control" name="description"></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label
-                        for="cono1"
-                        class="col-sm-3 text-end control-label col-form-label"
-                        >Image URL</label
-                      >
-                      <div class="col-sm-9">
-                        <input
-                          type="file"
-                          class="form-control"
-                          id="cono1"
-                          name="image"
-                          placeholder="Paste Image URL Here"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="border-top">
-                    <div class="card-body">
-                      <button type="submit" class="btn btn-primary">
-                        Submit
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-<%- include('footer') %>        
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%- include('footer') %>

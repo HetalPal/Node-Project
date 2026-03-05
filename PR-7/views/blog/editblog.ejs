@@ -1,0 +1,75 @@
+<%- include('../header') %>
+
+  <div class="page-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+
+            <form action="/blog/updateblog/<%= blogData._id %>" method="POST" enctype="multipart/form-data">
+
+              <div class="card-body">
+                <h4 class="card-title">Edit Blog</h4>
+
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" name="title" value="<%= blogData.title %>" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Short Description</label>
+                  <input type="text" name="shortDes" value="<%= blogData.shortDes %>" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Content</label>
+                  <textarea name="content" class="form-control" rows="5" required><%= blogData.content %></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Category</label>
+
+                  <select name="category" class="form-control" required>
+
+                    <option value="Technology" <%=blogData.category==="Technology" ? "selected" : "" %>>
+                      Technology
+                    </option>
+
+                    <option value="Health" <%=blogData.category==="Health" ? "selected" : "" %>>
+                      Health
+                    </option>
+
+                    <option value="Education" <%=blogData.category==="Education ? " selected" : "" %>>
+                      Education
+                    </option>
+
+                    <option value="Business" <%=blogData.category==="Business" ? "selected" : "" %>>
+                      Business
+                    </option>
+                  </select>
+                </div>
+
+                </select>
+
+                <div class="form-group">
+                  <label>Change Blog Image</label>
+                  <input type="file" name="coverImage" class="form-control-file">
+                </div>
+
+              </div>
+
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">
+                  Update
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../footer') %>
