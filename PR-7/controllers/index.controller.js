@@ -126,9 +126,9 @@ exports.sendOtp = async (req, res) => {
         let admin = await Admin.findOne({email: email})
         if(!admin){
             return res.redirect("/forgot-password");
-        }                  
-        let otp = otpGenerator.generate(6, {lowerCaseAlphabets:false, upperCaseAlphabets: false, specialChars:false})
-        
+        }
+        let otp = otpGenerator.generate(6, {lowerCaseAlphabets:false, upperCaseAlphabets: false, specialChars:false});
+
         let message = {
             from: `rw3.girish.gk@gmail.com`,
             to: `${email}`,
@@ -137,29 +137,32 @@ exports.sendOtp = async (req, res) => {
             <h1>Hello, ${admin.firstname}</h1>
             <p>Your Reset Password OTP is: ${otp}. OTP is valid only 5 Minutes.</p>
             `
-        }
+        };
         sendEmail(message);
-        res.cookie('otp', otp);
-        res.cookie('email', email);
+
+        // store otp and email in session instead of cookies
+        req.session.otp = otp;
+        req.session.email = email;
         return res.redirect("/verify-otp");
     } catch (error) {
         console.log(error);
-        return res.redirect("/")
+        return res.redirect("/");
     }
 }
 
 exports.verifyOtp = async (req, res) => {
     try {
         const otp = req.body.otp;
-        const OTP = req.cookies.otp;
+        const OTP = req.session.otp;
         if(otp != OTP){
             return res.redirect("/verify-otp");
         }
-        res.clearCookie('otp');
+        // clear OTP from session once used
+        delete req.session.otp;
         return res.redirect("/reset-password");
     } catch (error) {
         console.log(error);
-        return res.redirect("/")
+        return res.redirect("/");
     }
 }
 

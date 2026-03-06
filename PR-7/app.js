@@ -3,7 +3,6 @@ const port = 8457;
 
 const app = express();
 const dbConnect = require('./config/dbConnect');
-const cookieParser = require('cookie-parser');
 const passport = require('passport');
 require("./middleware/localStrategy");
 const blogRoutes = require("./routes/blog.routes");
@@ -13,7 +12,6 @@ dbConnect();
 
 //middleware
 app.set("view engine", 'ejs');
-app.use(cookieParser());
 app.use(express.urlencoded());
 app.use(express.static('public'))
 app.use("/uploads", express.static("uploads"));

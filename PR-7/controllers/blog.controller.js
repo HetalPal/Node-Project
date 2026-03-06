@@ -5,9 +5,10 @@ const fs = require("fs");
 //Add
 exports.addblogPage = async (req, res) => {
   try {
-    if (req.cookies && req.cookies.user) {
-      const Admin = require("../model/admin.model");
-      const user = await Admin.findById(req.cookies.user);
+    // authentication now uses passport/session instead of manual cookies
+    if (req.isAuthenticated && req.isAuthenticated()) {
+      // req.user is populated by passport
+      const user = req.user;
       return res.render("blog/addblog", { user });
     } else {
       return res.redirect("/");
@@ -35,28 +36,39 @@ exports.addblog = async (req, res) => {
 // View
 exports.viewAllblogs = async (req, res) => {
   try {
-   if (req.cookies && req.cookies.user) {
-  const user = await Admin.findById(req.cookies.user);
+    if (req.isAuthenticated && req.isAuthenticated()) {
+      const user = req.user;
 
       let filter = {};
-      const searchQuery = req.query.search;
-      const selectedCategory = req.query.category;
+      const search = req.query.search;
+      const category = req.query.category;
+      const sort = req.query.sort;
 
-      if (searchQuery) {
+      if (search) {
         filter.$or = [
-          { title: { $regex: searchQuery, $options: 'i' } },
-          { category: { $regex: searchQuery, $options: 'i' } }
+          { title: { $regex: search, $options: 'i' } },
+          { category: { $regex: search, $options: 'i' } }
         ];
       }
-      if (selectedCategory) {
-        filter.category = selectedCategory;
+      if (category) {
+        filter.category = category;
       }
 
-      const blogs = await Blog.find(filter).sort({ date: -1 });
+      let sortOrder = { date: -1 };
+      if (sort === 'new') {
+        sortOrder = { date: -1 };
+      } else if (sort === 'old') {
+        sortOrder = { date: 1 };
+      } else if (sort === 'az') {
+        sortOrder = { title: 1 };
+      }
+
+      const blogs = await Blog.find(filter).sort(sortOrder);
       return res.render("blog/viewblog", {
         blogs,
-        searchQuery,
-        selectedCategory,
+        search,
+        category,
+        sort,
         user
       });
     } else {
@@ -71,8 +83,8 @@ exports.viewAllblogs = async (req, res) => {
 // Edit
 exports.editblog = async (req, res) => {
   try {
-    if (req.cookies && req.cookies.user) {
-      const user = await Admin.findById(req.cookies.user);
+    if (req.isAuthenticated && req.isAuthenticated()) {
+      const user = req.user;
       const blogData = await Blog.findById(req.params.id);
       return res.render("blog/editblog", { blogData, user });
     } else {
