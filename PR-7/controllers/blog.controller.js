@@ -26,7 +26,7 @@ exports.addblog = async (req, res) => {
       ...req.body,
       coverImage: imagePath
     });
-    return res.redirect("/blog/viewblog");
+    return res.redirect("/blog/view-blog");
   } catch (error) {
     console.log(error);
     return res.redirect("/");
@@ -92,7 +92,7 @@ exports.editblog = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.redirect("/blog/viewblog");
+    return res.redirect("/blog/view-blog");
   }
 };
 
@@ -116,10 +116,10 @@ exports.updateblog = async (req, res) => {
       ...req.body,
       coverImage: imagePath
     });
-    return res.redirect("/blog/viewblog");
+    return res.redirect("/blog/view-blog");
   } catch (error) {
     console.log(error);
-    return res.redirect("/blog/viewblog");
+    return res.redirect("/blog/view-blog");
   }
 };
 //Delete
@@ -130,10 +130,10 @@ exports.deleteblog = async (req, res) => {
       fs.unlinkSync(blogData.coverImage);
     }
     await Blog.findByIdAndDelete(req.params.id);
-    return res.redirect("/blog/viewblog");
+    return res.redirect("/blog/view-blog");
   } catch (error) {
     console.log(error);
-    return res.redirect("/blog/viewblog");
+    return res.redirect("/blog/view-blog");
   }
 };
 //Single Page
