@@ -1,0 +1,85 @@
+<%- include('../header') %>
+
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="card">
+                <form action="/product/update-product/<%= product._id %>" method="POST" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <h4>Edit Product</h4>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" name="title" value="<%= product.title %>" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" class="form-control"><%= product.description %></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="number" name="price" value="<%= product.price %>" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" value="<%= product.quantity %>" class="form-control">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="categoryId" class="form-control">
+                                <% categories.forEach(cat=>{ %>
+                                    <option value="<%= cat._id %>" <%=product.categoryId.toString()===cat._id.toString()
+                                        ? 'selected' : '' %>>
+                                        <%= cat.categoryname %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>SubCategory</label>
+                            <select name="subCategoryId" class="form-control">
+                                <% subcategories.forEach(sub=>{ %>
+                                    <option value="<%= sub._id %>"
+                                        <%=product.subCategoryId.toString()===sub._id.toString() ? 'selected' : '' %>>
+                                        <%= sub.subCategoryName %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ExtraCategory</label>
+                            <select name="extraCategoryId" class="form-control">
+                                <% extracategories.forEach(extra=>{ %>
+                                    <option value="<%= extra._id %>"
+                                        <%=product.extraCategoryId.toString()===extra._id.toString() ? 'selected' : ''
+                                        %>>
+                                        <%= extra.extraCategoryName %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" name="productImage" class="form-control">
+                            <br>
+                            <img src="<%= product.productImage %>" width="80">
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <button class="btn btn-primary">
+                            Update Product
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../footer') %>

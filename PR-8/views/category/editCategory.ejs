@@ -1,0 +1,74 @@
+<%- include('../header') %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <form action="/category/update-category/<%= category._id %>" method="POST" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <h4 class="card-title">Edit Category</h4>
+                        <div class="form-group">
+                            <label>Category Name</label>
+                            <input type="text" class="form-control" name="categoryname" value="<%= category.categoryname %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category Image</label>
+                            <br>
+                            <% if(category.categoryImage){ %>
+                                <img src="<%= category.categoryImage %>" width="120">
+                            <% } %>
+                            <input type="hidden" name="oldImage" value="<%= category.categoryImage %>">
+                            <input type="file" name="categoryImage" class="form-control mt-2">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary">
+                            Update Category
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script>
+
+        let category = document.getElementById("category");
+        let subcategory = document.getElementById("subcategory");
+
+        function filterSubCategory() {
+
+            let catId = category.value;
+
+            for (let option of subcategory.options) {
+
+                let subCat = option.getAttribute("data-category");
+
+                if (!subCat) {
+                    option.style.display = "block";
+                    continue;
+                }
+
+                if (subCat === catId) {
+                    option.style.display = "block";
+                } else {
+                    option.style.display = "none";
+                }
+
+            }
+
+        }
+
+        category.addEventListener("change", filterSubCategory);
+
+        // IMPORTANT → page load time e run thase
+        window.onload = filterSubCategory;
+
+    </script>
+
+    <%- include('../footer') %>

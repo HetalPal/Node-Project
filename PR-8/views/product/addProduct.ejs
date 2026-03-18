@@ -1,0 +1,122 @@
+<%- include('../header') %>
+
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="card">
+                <form action="/product/add-product" method="POST" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <h4 class="card-title">Add Product</h4>
+
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" name="title" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="number" name="price" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Category</label>
+                            <select name="categoryId" id="category" class="form-control" required>
+                                <option value="">Select Category</option>
+                                <% categories.forEach(cat=>{ %>
+                                    <option value="<%= cat._id %>">
+                                        <%= cat.categoryname %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select SubCategory</label>
+                            <select name="subCategoryId" id="subcategory" class="form-control" required>
+                                <option value="">Select SubCategory</option>
+                                <% subcategories.forEach(sub=>{ %>
+                                    <option value="<%= sub._id %>" data-category="<%= sub.categoryId %>">
+                                        <%= sub.subCategoryName %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select ExtraCategory</label>
+                            <select name="extraCategoryId" id="extracategory" class="form-control" required>
+                                <option value="">Select ExtraCategory</option>
+                                <% extracategories.forEach(extra=>{ %>
+                                    <option value="<%= extra._id %>" data-sub="<%= extra.subCategoryId %>">
+                                        <%= extra.extraCategoryName %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Product Image</label>
+                            <input type="file" name="productImage" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <button class="btn btn-primary">
+                            Add Product
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let category = document.getElementById("category")
+        let subcategory = document.getElementById("subcategory")
+        let extracategory = document.getElementById("extracategory")
+
+        category.addEventListener("change", function () {
+            let catId = this.value
+            for (let option of subcategory.options) {
+                let subCat = option.getAttribute("data-category")
+                if (!subCat) {
+                    option.style.display = "block"
+                    continue
+                }
+
+                if (subCat === catId) {
+                    option.style.display = "block"
+                } else {
+                    option.style.display = "none"
+                }
+            }
+        })
+
+        subcategory.addEventListener("change", function () {
+            let subId = this.value
+            for (let option of extracategory.options) {
+                let extraSub = option.getAttribute("data-sub")
+                if (!extraSub) {
+                    option.style.display = "block"
+                    continue
+                }
+
+                if (extraSub === subId) {
+                    option.style.display = "block"
+                } else {
+                    option.style.display = "none"
+                }
+            }
+        })
+    </script>
+
+    <%- include('../footer') %>

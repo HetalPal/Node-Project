@@ -1,0 +1,119 @@
+<%- include('../header') %>
+
+    <div class="page-wrapper">
+        <div class="container-fluid">
+
+            <div class="card">
+
+                <form action="/extracategory/update-extracategory/<%= extracategory._id %>" method="POST">
+
+                    <div class="card-body">
+
+                        <h4>Edit Extra Category</h4>
+
+                        <div class="form-group">
+
+                            <label>Extra Category Name</label>
+
+                            <input type="text" name="extraCategoryName" value="<%= extracategory.extraCategoryName %>"
+                                class="form-control">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Select Category</label>
+
+                            <select id="category" class="form-control">
+
+                                <% categories.forEach(cat=>{ %>
+
+                                    <option value="<%= cat._id %>"
+                                        <%=extracategory.subCategoryId.categoryId._id.toString()===cat._id.toString()
+                                        ? 'selected' :'' %>
+                                        >
+
+                                        <%= cat.categoryname %>
+
+                                    </option>
+
+                                    <% }) %>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Select SubCategory</label>
+
+                            <select name="subCategoryId" id="subcategory" class="form-control">
+
+                                <% subcategories.forEach(sub=>{ %>
+
+                                    <option value="<%= sub._id %>" data-category="<%= sub.categoryId %>"
+                                        <%=extracategory.subCategoryId._id.toString()===sub._id.toString() ? 'selected'
+                                        :'' %>
+                                        >
+
+                                        <%= sub.subCategoryName %>
+
+                                    </option>
+
+                                    <% }) %>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <button class="btn btn-primary">
+                            Update
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        let category = document.getElementById("category");
+        let subcategory = document.getElementById("subcategory");
+
+        category.addEventListener("change", function () {
+
+            let catId = this.value;
+
+            for (let option of subcategory.options) {
+
+                let subCat = option.getAttribute("data-category");
+
+                if (!subCat) {
+                    option.style.display = "block";
+                    continue;
+                }
+
+                if (subCat === catId) {
+                    option.style.display = "block";
+                } else {
+                    option.style.display = "none";
+                }
+
+            }
+
+        })
+
+    </script>
+
+    <%- include('../footer') %>
