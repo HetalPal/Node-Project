@@ -1,21 +1,20 @@
-const express = require('express')
+const express = require('express');
+const routes = express.Router();
 
 const {
-addSubCategoryPage,
-addSubCategory,
-viewSubCategory,
-deleteSubCategory,
-editSubCategory,
-updateSubCategory
-} = require('../controllers/subCategory.controller')
+  addSubCategoryPage,
+  addSubCategory,
+  viewSubCategory,
+  editSubCategory,
+  updateSubCategory,
+  deleteSubCategory
+} = require('../controllers/subCategory.controller');
 
-const routes = express.Router()
+routes.get('/add-subcategory', addSubCategoryPage);
+routes.post('/add-subcategory', addSubCategory);
+routes.get('/view-subcategory', viewSubCategory);
+routes.get('/edit-subcategory/:id', editSubCategory);
+routes.post('/update-subcategory/:id', updateSubCategory);
+routes.get('/delete-subcategory/:id', deleteSubCategory); 
 
-routes.get('/add-subcategory',addSubCategoryPage)
-routes.post('/add-subcategory',addSubCategory)
-routes.get('/view-subcategory',viewSubCategory)
-routes.get('/delete-subcategory/:id',deleteSubCategory)
-routes.get('/edit-subcategory/:id',editSubCategory)
-routes.post('/update-subcategory/:id',updateSubCategory)
-
-module.exports = routes
+module.exports = routes;

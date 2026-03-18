@@ -1,67 +1,85 @@
 const Category = require('../model/category.model');
-const SubCategory = require('../model/subcategory.model');
+const SubCategory = require('../model/subcategory.model')
+const ExtraCategory = require('../model/extraCategory.model');
+const Product = require('../model/product.model');
 
-exports.addSubCategoryPage = async (req,res)=>{
-    try{
+exports.addSubCategoryPage = async (req, res) => {
+    try {
 
         let categories = await Category.find();
 
-        res.render('subcategory/addSubCategory',{
+        res.render('subcategory/addSubCategory', {
             categories
         })
 
-    }catch(err){
+    } catch (err) {
         console.log(err)
         res.redirect('/')
     }
 }
 
-exports.addSubCategory = async (req,res)=>{
-    try{
+exports.addSubCategory = async (req, res) => {
+    try {
 
         await SubCategory.create({
-            categoryId : req.body.categoryId,
-            subCategoryName : req.body.subCategoryName
+            categoryId: req.body.categoryId,
+            subCategoryName: req.body.subCategoryName
         })
 
         res.redirect('/subcategory/view-subcategory')
 
-    }catch(err){
+    } catch (err) {
         console.log(err)
         res.redirect('/')
     }
 }
 
-exports.viewSubCategory = async (req,res)=>{
-    try{
+exports.viewSubCategory = async (req, res) => {
+    try {
 
-        let subcategories = await SubCategory.find()
-        .populate('categoryId')
-
-        res.render('subcategory/viewSubCategory',{
+        let subcategories = await SubCategory.find().populate('categoryId');
+        res.render('subcategory/viewSubCategory', {
             subcategories
         })
 
-    }catch(err){
+    } catch (err) {
         console.log(err)
         res.redirect('/')
     }
 }
 
-exports.deleteSubCategory = async (req,res)=>{
-    try{
+exports.deleteSubCategory = async (req, res) => {
+    try {
 
-        await SubCategory.findByIdAndDelete(req.params.id)
+        const subCategoryId = req.params.id;
 
-        res.redirect('/subcategory/view-subcategory')
+        //  Find ExtraCategories
+        const extraCategories = await ExtraCategory.find({
+            subCategoryId: subCategoryId
+        });
 
-    }catch(err){
-        console.log(err)
-        res.redirect('/')
+        const extraCategoryIds = extraCategories.map(extra => extra._id);
+
+        //  Delete Products
+        await Product.deleteMany({
+            extraCategoryId: { $in: extraCategoryIds }
+        });
+
+        //  Delete ExtraCategories
+        await ExtraCategory.deleteMany({
+            subCategoryId: subCategoryId
+        });
+
+        //  Delete SubCategory
+        await SubCategory.findByIdAndDelete(subCategoryId);
+
+        res.redirect('/subcategory/view-subcategory');
+
+    } catch (error) {
+        console.log(error);
+        res.redirect('/');
     }
-}
-
-
+};
 
 exports.editSubCategory = async (req, res) => {
     try {

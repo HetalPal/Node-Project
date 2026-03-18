@@ -1,24 +1,35 @@
-const Product = require('../model/product.model')
-const Category = require('../model/category.model')
-const SubCategory = require('../model/subcategory.model')
-const ExtraCategory = require('../model/extraCategory.model')
+const Product = require('../model/product.model');
+const Category = require('../model/category.model');
+const SubCategory = require('../model/subcategory.model');
+const ExtraCategory = require('../model/extraCategory.model');
 
+
+//  Add Product Page
 exports.addProductPage = async (req, res) => {
     try {
-        let categories = await Category.find()
-        let subcategories = await SubCategory.find()
-        let extracategories = await ExtraCategory.find()
+        const categories = await Category.find();
+        const subcategories = await SubCategory.find();
+        const extracategories = await ExtraCategory.find();
 
-        res.render('product/addProduct', { categories, subcategories, extracategories })
+        res.render('product/addProduct', {
+            categories,
+            subcategories,
+            extracategories
+        });
+
     } catch (err) {
-        console.log(err)
-        res.redirect('/')
+        console.log(err);
+        res.redirect('/');
     }
-}
+};
 
+
+//  Add Product
 exports.addProduct = async (req, res) => {
     try {
-        let image = req.file ? `/uploads/${req.file.filename}` : ""
+
+        let image = req.file ? `/uploads/${req.file.filename}` : "";
+
         await Product.create({
             title: req.body.title,
             description: req.body.description,
@@ -28,21 +39,25 @@ exports.addProduct = async (req, res) => {
             subCategoryId: req.body.subCategoryId,
             extraCategoryId: req.body.extraCategoryId,
             productImage: image
-        })
-        res.redirect('/product/view-product')
-    } catch (err) {
-        console.log(err)
-        res.redirect('/')
-    }
-}
+        });
 
+        res.redirect('/product/view-product');
+
+    } catch (err) {
+        console.log(err);
+        res.redirect('/');
+    }
+};
+
+
+//  View Product 
 exports.viewProduct = async (req, res) => {
     try {
 
-        let products = await Product.find()
-        .populate('categoryId')
-        .populate('subCategoryId')
-        .populate('extraCategoryId');
+        const products = await Product.find()
+            .populate('categoryId')
+            .populate('subCategoryId')
+            .populate('extraCategoryId');
 
         res.render('product/viewProduct', {
             products
@@ -54,35 +69,56 @@ exports.viewProduct = async (req, res) => {
     }
 };
 
+
+//  Delete Product (SAFE)
 exports.deleteProduct = async (req, res) => {
     try {
-        await Product.findByIdAndDelete(req.params.id)
-        res.redirect('/product/view-product')
-    } catch (err) {
-        console.log(err)
-        res.redirect('/')
-    }
-}
 
+        const productId = req.params.id;
+
+        await Product.findByIdAndDelete(productId);
+
+        res.redirect('/product/view-product');
+
+    } catch (err) {
+        console.log(err);
+        res.redirect('/');
+    }
+};
+
+
+//  Edit Product Page
 exports.editProduct = async (req, res) => {
     try {
-        let product = await Product.findById(req.params.id)
-        let categories = await Category.find()
-        let subcategories = await SubCategory.find()
-        let extracategories = await ExtraCategory.find()
 
-        res.render('product/editProduct', { product, categories, subcategories, extracategories })
+        const product = await Product.findById(req.params.id);
+
+        const categories = await Category.find();
+        const subcategories = await SubCategory.find();
+        const extracategories = await ExtraCategory.find();
+
+        res.render('product/editProduct', {
+            product,
+            categories,
+            subcategories,
+            extracategories
+        });
+
     } catch (err) {
-        console.log(err)
-        res.redirect('/')
+        console.log(err);
+        res.redirect('/');
     }
-}
+};
 
 
-
+//  Update Product
 exports.updateProduct = async (req, res) => {
     try {
-        let image = req.file ? `/uploads/${req.file.filename}` : req.body.oldImage
+
+        let image = req.file
+            ? `/uploads/${req.file.filename}`
+            : req.body.oldImage;
+
         await Product.findByIdAndUpdate(req.params.id, {
             title: req.body.title,
             description: req.body.description,
@@ -92,10 +128,12 @@ exports.updateProduct = async (req, res) => {
             subCategoryId: req.body.subCategoryId,
             extraCategoryId: req.body.extraCategoryId,
             productImage: image
-        })
-        res.redirect('/product/view-product')
+        });
+
+        res.redirect('/product/view-product');
+
     } catch (err) {
-        console.log(err)
-        res.redirect('/')
+        console.log(err);
+        res.redirect('/');
     }
-}
+};

@@ -1,6 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose')
 const Category = require('../model/category.model');
+const SubCategory = require('../model/subcategory.model');
+const ExtraCategory = require('../model/extraCategory.model');
+const Product = require('../model/product.model');
 
 exports.addCategoryPage = async (req, res) => {
     try {
@@ -47,26 +51,39 @@ exports.viewCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
     try {
 
-        let category = await Category.findById(req.params.id);
+        const categoryId = req.params.id;
 
-        if (category.categoryImg) {
+        //  Find SubCategories
+        const subcategories = await SubCategory.find({ categoryId });
+        const subCategoryIds = subcategories.map(sub => sub._id);
 
-            let imgPath = path.join(__dirname, "..", category.categoryImg);
+        //  Find ExtraCategories
+        const extraCategories = await ExtraCategory.find({
+            subCategoryId: { $in: subCategoryIds }
+        });
+        const extraCategoryIds = extraCategories.map(extra => extra._id);
 
-            try {
-                fs.unlinkSync(imgPath);
-            } catch (err) {
-                console.log("Image not found");
-            }
-        }
+        //  Delete Products
+        await Product.deleteMany({
+            extraCategoryId: { $in: extraCategoryIds }
+        });
 
-        await Category.findByIdAndDelete(req.params.id);
+        //  Delete ExtraCategories
+        await ExtraCategory.deleteMany({
+            subCategoryId: { $in: subCategoryIds }
+        });
 
-        return res.redirect("/category/view-category");
+        //  Delete SubCategories
+        await SubCategory.deleteMany({ categoryId });
+
+        //  Delete Category
+        await Category.findByIdAndDelete(categoryId);
+
+        res.redirect('/category/view-category');
 
     } catch (error) {
         console.log(error);
-        return res.redirect("/");
+        res.redirect('/');
     }
 };
 

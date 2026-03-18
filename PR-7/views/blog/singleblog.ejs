@@ -1,47 +1,49 @@
-<%- include('header') %>
+<%- include('../header') %>
 
-<div class="page-wrapper">
-  <div class="container-fluid">
+  <div class="page-wrapper">
+    <div class="container-fluid">
 
-    <div class="card shadow">
-      
-      <% if(blog.image){ %>
-        <img src="<%= blog.image %>" 
-             class="card-img-top" 
-             style="height:350px; object-fit:cover;">
-      <% } %>
+      <div class="card shadow">
 
-      <div class="card-body">
-        <h2 class="card-title"><%= blog.title %></h2>
-        <p class="text-muted">Category: <%= blog.category %></p>
-        <p><strong>Author:</strong> <%= blog.author %></p>
+        <% if(blog.coverImage){ %>
+          <img src="/<%= blog.coverImage %>" class="card-img-top" style="height:350px; object-fit:cover;">
+          <% } %>
 
-        <hr>
+            <div class="card-body">
+              <h2 class="card-title">
+                <%= blog.title %>
+              </h2>
+              <p class="text-muted">Category: <%= blog.category %>
+              </p>
+              <p><strong>Author:</strong>
+                <%= blog.author %>
+              </p>
 
-        <p class="card-text">
-          <%= blog.description %>
-        </p>
+              <hr>
 
-        <br>
+              <p class="card-text">
+                <%- blog.content %>
+              </p>
 
-        <a href="/blog/edit-blog/<%= blog._id %>" class="btn btn-warning">
-          Edit
-        </a>
+              <br>
 
-        <a href="/blog/delete-blog/<%= blog._id %>" 
-           class="btn btn-danger"
-           onclick="return confirm('Are you sure?')">
-          Delete
-        </a>
+              <a href="/blog/edit-blog/<%= blog._id %>" class="btn btn-warning">
+                Edit
+              </a>
 
-        <a href="/blog/view-blog" class="btn btn-secondary">
-          Back
-        </a>
+              <a href="/blog/deleteblog/<%= blog._id %>" class="btn btn-danger"
+                onclick="return confirm('Are you sure?')">
+                Delete
+              </a>
 
+              <a href="/blog/view-blog" class="btn btn-secondary">
+                Back
+              </a>
+
+            </div>
       </div>
+
     </div>
-
   </div>
-</div>
 
-<%- include('footer') %>
+  <%- include('../footer') %>

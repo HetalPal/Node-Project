@@ -25,7 +25,7 @@
                                         <%= i+1 %>
                                     </td>
                                     <td>
-                                        <%= sub.categoryId.categoryname %>
+                                        <%= sub.categoryId ? sub.categoryId.categoryname : "No Category" %>
                                     </td>
                                     <td>
                                         <%= sub.subCategoryName %>

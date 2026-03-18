@@ -35,11 +35,13 @@
                                     </td>
 
                                     <td>
-                                        <%= extra.subCategoryId.categoryId.categoryname %>
+                                        <%= extra.subCategoryId && extra.subCategoryId.categoryId ?
+                                            extra.subCategoryId.categoryId.categoryname : "No Category" %>
                                     </td>
 
                                     <td>
-                                        <%= extra.subCategoryId.subCategoryName %>
+                                        <%= extra.subCategoryId ? extra.subCategoryId.subCategoryName : "No SubCategory"
+                                            %>
                                     </td>
 
                                     <td>

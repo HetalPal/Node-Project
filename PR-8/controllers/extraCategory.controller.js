@@ -1,6 +1,7 @@
 const Category = require('../model/category.model');
 const SubCategory = require('../model/subcategory.model');
 const ExtraCategory = require('../model/extraCategory.model');
+const Product = require('../model/product.model')
 
 exports.addExtraCategoryPage = async (req, res) => {
     try {
@@ -62,7 +63,15 @@ exports.viewExtraCategory = async (req, res) => {
 exports.deleteExtraCategory = async (req, res) => {
     try {
 
-        await ExtraCategory.findByIdAndDelete(req.params.id);
+        const extraCategoryId = req.params.id;
+
+        //  Delete Products
+        await Product.deleteMany({
+            extraCategoryId: extraCategoryId
+        });
+
+        //  Delete ExtraCategory
+        await ExtraCategory.findByIdAndDelete(extraCategoryId);
 
         res.redirect('/extracategory/view-extracategory');
 
